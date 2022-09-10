@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row m-3">
+    <h3>
+      <span class="bg-secondary px-2">コンテンツ詳細(映画以外)</span>
+    </h3>
+  </div>
+  <div class="row m-3">
+    <div class="col-3">
+      <%= image_tag @other_content.get_image(320,240),class:"border border-dark" %>
+    </div>
+    <div class="col-7">
+      <label>ジャンル</label>
+      <%= @other_content.genre.name %></br>
+      <label>タイトル</label>
+      <%= @other_content.title %></br>
+      <label>公開日時</label>
+      <%= @other_content.release_date %></br>
+      <%= link_to edit_other_content_path(@other_content.id) do %>
+        <label class="btn btn-success">編集する</label>
+      <% end %>
+      レビューを投稿する
+    </div>
+  </div>
+</div>

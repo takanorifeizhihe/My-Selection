@@ -1,0 +1,21 @@
+コンテンツ一覧
+
+
+コンテンツタイトル追加
+<%= form_with model:@post,url: posts_path, method: :post do |f| %>
+
+  <%= f.label "ジャンル  　　　　" %>
+  <%= f.select :genre_id, options_from_collection_for_select(Genre.all, :id, :name), { include_blank: '--選択してください--' } %></br>
+
+  <%= f.label "タイトル　　           　　　 " %>
+  <%= f.text_field :title %></br>
+
+  <%= f.label "商品画像  　　　　" %>
+  <%= f.file_field :image, accept: "image/*" %></br>
+
+
+  <%= f.label "公開日時　　           　　　 " %>
+  <%= f.text_field :release_date %></br>
+
+  <%= f.submit '新規登録' ,class:"btn btn-success"%>
+<% end %>
