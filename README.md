@@ -53,6 +53,13 @@
 
  - テーマが確定し、ER図やテーブル定義書、詳細設計を作成した場合は、閲覧可能なURLを追記してください。
 
+・ER図<br>
+<https://drive.google.com/file/d/1mWxA2zV5uI381NN9_0wORRGHvnmk1IB-/view?usp=sharing><br>
+・テーブル定義書<br>
+<https://docs.google.com/spreadsheets/d/1jfv4FwtijXjXCeMU5bN5DLdBPmo9MOgbMDBxWX1iKU0/edit?usp=sharing><br>
+・詳細設計書<br>
+<https://docs.google.com/spreadsheets/d/1FtDCeFynz8fMRgzzamXhmsCsQWFniRQRPsFKuYdFZGE/edit?usp=sharing><br>
+
 
 ## 開発環境
 - OS：Mac os
