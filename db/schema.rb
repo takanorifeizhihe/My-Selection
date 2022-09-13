@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_08_144236) do
+ActiveRecord::Schema.define(version: 2022_09_11_091824) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 2022_09_08_144236) do
     t.integer "user_id"
     t.integer "movie_id"
     t.integer "other_content_id"
-    t.string "star"
+    t.integer "star"
     t.string "comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2022_09_08_144236) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "is_active", default: true, null: false
     t.string "nickname", null: false
-    t.string "birthday", null: false
+    t.string "birthday"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

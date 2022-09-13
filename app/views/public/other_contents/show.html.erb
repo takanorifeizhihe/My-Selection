@@ -18,7 +18,8 @@
       <%= link_to edit_other_content_path(@other_content.id) do %>
         <label class="btn btn-success">編集する</label>
       <% end %>
-      レビューを投稿する
+
+      <%= render 'post_form', post: @post %>
     </div>
   </div>
 </div>

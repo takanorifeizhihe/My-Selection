@@ -1,0 +1,14 @@
+<h1 class="p-3">コンテンツ一覧</h1>
+      <div class="d-flex flex-wrap">
+        <% other_contents.each do |other_content| %>
+          <div class="p-4">
+            <%= link_to other_content_path(other_content.id) do %>
+              <%= image_tag other_content.get_image(80,80) %>
+            <% end %>
+            <%= other_content.title %></br>
+            <%= l(other_content.release_date, format: :default) %></br>
+          </div>
+          <%= render 'post_view', posts: @posts %>
+        <% end %>
+      </div>
+      <%= paginate other_contents %>

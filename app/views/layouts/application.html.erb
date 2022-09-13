@@ -11,7 +11,127 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+   <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/"><span class='nav-link text-dark' class="border border-dark">My Selection</span></a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <% if admin_signed_in? %>
+            <li>
+              <%= link_to movies_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-home"></i>
+              <span>コンテンツ（映画）一覧</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to admin_other_contents_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-users"></i>
+              <span>コンテンツ(映画以外)一覧</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to admin_posts_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-book-open"></i>
+              <span>投稿一覧</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to admin_genres_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-book-open"></i>
+              <span>ジャンル一覧</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_admin_session_path, method: :delete,class:'nav-link text-dark' do %>
+              <i class="fas fa-sign-out-alt"></i>
+              <span>ログアウト</span>
+              <% end %>
+            </li>
+
+            <% elsif user_signed_in? %>
+
+            <p class='nav-link text-dark'>ようこそ、<%= current_user.nickname %>さん！</p>
+            <li>
+              <%= link_to users_my_page_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-users"></i>
+              <span>マイページ</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to posts_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-book-open"></i>
+              <span>投稿一覧</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path, method: :delete,class:'nav-link text-dark' do %>
+              <i class="fas fa-sign-out-alt"></i>
+              <span>ログアウト</span>
+              <% end %>
+
+            <% else %>
+            <li>
+              <%= link_to about_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-link"></i>
+              <span>About</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to posts_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-home"></i>
+              <span>投稿一覧</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_user_registration_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-user-plus"></i>
+              <span>新規登録</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to user_session_path,class:'nav-link text-dark' do %>
+              <i class="fas fa-sign-in-alt"></i>
+              <span>ログイン</span>
+              <% end %>
+            </li>
+            <% end %>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-dark" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+      </nav>
+    </header>
+    <main>
+
+    <% if flash[:notice] %>
+      <p id="notice">
+        <%= flash[:notice] %>
+      </p>
+    <% end %>
+    <% if flash[:alert] %>
+      <p id="notice">
+        <%= flash[:alert] %>
+      </p>
+    <% end %>
+
+    </main>
+
+
+    <%= render 'layouts/flash' %>
     <%= yield %>
+    <footer>
+      <div class="container mt-5">
+  	    <div class="row">
+    	    <div class="mx-auto">
+    		    <p>CopyRight Infratop.inc</p>
+    	    </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

@@ -1,16 +1,20 @@
 Rails.application.routes.draw do
 
+  get 'movies/search'
+  get 'movies/show'
+  get 'movies/index'
 # 会員用
 #devise_for :users, controllers: {
 #  registrations: "public/registrations",
 #  sessions: 'public/sessions'
 #}
  devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    passwords: 'users/passwords'
+    registrations: 'public/registrations',
+    sessions: 'public/sessions',
+    passwords: 'public/passwords'
   }
   devise_scope :users do
-    post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
+    post 'public/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
 
 # 管理者用
@@ -53,6 +57,7 @@ namespace :admin do
 
 #other_contents
   resources :other_contents, :only => [:index, :edit, :show, :update, :destroy ]
+  
 
 #genres
   resources :genres, :only => [:index, :create, :update, :edit ]

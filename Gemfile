@@ -57,3 +57,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'kaminari'
 gem 'pry-byebug'
+gem 'themoviedb-api', '~> 1.3'

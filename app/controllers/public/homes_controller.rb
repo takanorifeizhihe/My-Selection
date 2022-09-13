@@ -1,5 +1,5 @@
 class Public::HomesController < ApplicationController
-  
+
   def guest_sign_in
     user = User.find_or_create_by!(email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64
@@ -9,11 +9,14 @@ class Public::HomesController < ApplicationController
     sign_in user
     redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end
-  
+
   def top
+    @other_contents = OtherContent.all.page(params[:page]).per(10)
+    @posts = Post.all
+    @sum = 0
   end
-  
+
   def about
   end
-  
+
 end
