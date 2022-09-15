@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'movies/search'
-  get 'movies/show'
-  get 'movies/index'
 # 会員用
 #devise_for :users, controllers: {
 #  registrations: "public/registrations",
@@ -39,7 +36,8 @@ scope module: :public do
   resources :posts, :only => [:index, :update, :show, :create, :destroy, :edit ]
 
 #movies
-  resources :movies, :only => [:index, :show ]
+  get 'movies/:id' => "movies#show",as: 'detail'
+  resources :movies, :only => [:index]
 
 #other_contents
   resources :other_contents, :only => [:index, :edit, :show, :create, :update, :destroy ]
@@ -57,7 +55,7 @@ namespace :admin do
 
 #other_contents
   resources :other_contents, :only => [:index, :edit, :show, :update, :destroy ]
-  
+
 
 #genres
   resources :genres, :only => [:index, :create, :update, :edit ]
