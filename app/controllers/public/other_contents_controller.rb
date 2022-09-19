@@ -12,6 +12,7 @@ class Public::OtherContentsController < ApplicationController
 
   def show
     @other_content = OtherContent.find(params[:id])
+    @post = Post.new
   end
 
   def create

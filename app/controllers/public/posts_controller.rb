@@ -14,6 +14,8 @@ class Public::PostsController < ApplicationController
   end
 
   def show
+    @post = Post.find(params[:id])
+    @post_comment = PostComment.new
   end
 
   def destroy
@@ -22,16 +24,11 @@ class Public::PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
-    if @already_post = current_user.posts.find_by(other_content_id: params[:post][:other_content_id])
-      #createしているならupdateに変更する仕様にする
-			@already_cart_item.save
-      #@cart_item.update(cart_item_params)
-      redirect_to posts_path
+    if @post.save
+      redirect_to book_path(@book), notice: "You have created book successfully."
     else
-      #binding.pry
-      
-      @post.save!
-      redirect_to post_path
+      @books = Book.all
+      render 'index'
     end
     #if @post.save
      # redirect_to posts_path, notice: "You have created book successfully."

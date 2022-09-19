@@ -2,14 +2,16 @@
 <html>
   <head>
     <title>MySelection</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
 
    <body>
@@ -60,12 +62,7 @@
               <span>マイページ</span>
               <% end %>
             </li>
-            <li>
-              <%= link_to posts_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-book-open"></i>
-              <span>投稿一覧</span>
-              <% end %>
-            </li>
+
             <li>
               <%= link_to destroy_user_session_path, method: :delete,class:'nav-link text-dark' do %>
               <i class="fas fa-sign-out-alt"></i>
@@ -79,12 +76,7 @@
               <span>About</span>
               <% end %>
             </li>
-            <li>
-              <%= link_to posts_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-home"></i>
-              <span>投稿一覧</span>
-              <% end %>
-            </li>
+
             <li>
               <%= link_to new_user_registration_path,class:'nav-link text-dark' do %>
               <i class="fas fa-user-plus"></i>

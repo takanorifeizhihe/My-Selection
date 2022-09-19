@@ -32,15 +32,18 @@ scope module: :public do
   get '/users/unsubscribe', to: 'users#unsubscribe'
   get '/users/unsubscribe', to: 'users#unsubscribe'
 
-#posts
-  resources :posts, :only => [:index, :update, :show, :create, :destroy, :edit ]
-
 #movies
   get 'movies/:id' => "movies#show",as: 'detail'
   resources :movies, :only => [:index]
 
 #other_contents
   resources :other_contents, :only => [:index, :edit, :show, :create, :update, :destroy ]
+
+#
+  resources :posts, :only => [:index, :update, :show, :create, :destroy, :edit ] do
+      resource :likes, only: [:create, :destroy]
+      resources :post_comments, only: [:create, :destroy]
+  end
 
 end
 

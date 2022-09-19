@@ -19,7 +19,23 @@
         <label class="btn btn-success">編集する</label>
       <% end %>
 
-      <%= render 'post_form', post: @post %>
+
+        <div class="card-content">
+            <div class="content average-score">
+              <div class="star-rating mb-2">
+                <div class="star-rating-front" style="width: %">★★★★★</div>
+                <div class="star-rating-back">★★★★★</div>
+              </div>
+              <div class="average-score-display ml-3 pt-2">
+                点（<%= @other_content.posts.count %>件のレビュー）
+              </div>
+            </div>
+          </div>
+        </div>
+      <%= render 'post_form', post: @post, other_content: @other_content %>
+
+     
+
     </div>
   </div>
 </div>
