@@ -18,7 +18,7 @@ import '@fortawesome/fontawesome-free/js/all'
 //追記
 window.$ = window.jQuery = require('jquery');
 require('packs/raty')
-
+//import "./post.js"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

@@ -33,18 +33,18 @@ scope module: :public do
   get '/users/unsubscribe', to: 'users#unsubscribe'
 
 #movies
-  get 'movies/:id' => "movies#show",as: 'detail'
-  resources :movies, :only => [:index]
-
-#other_contents
-  resources :other_contents, :only => [:index, :edit, :show, :create, :update, :destroy ]
-
-#
-  resources :posts, :only => [:index, :update, :show, :create, :destroy, :edit ] do
-      resource :likes, only: [:create, :destroy]
-      resources :post_comments, only: [:create, :destroy]
+  #get 'movies/:id' => "movies#show",as: 'detail'
+  resources :movies, :only => [:index,:show] do
+    resource :likes, :only => [:create_movie,:destroy_movie]
   end
 
+#other_contents
+  resources :other_contents, :only => [:index, :edit, :show, :create, :update, :destroy ] do
+    resource :likes, :only => [:create,:destroy]
+  end
+
+#post
+ resources :posts, :only => [:index, :update, :show, :create, :destroy, :edit ]
 end
 
 # 管理者用

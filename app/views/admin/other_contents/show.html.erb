@@ -15,23 +15,11 @@
       <%= @other_content.title %></br>
       <label>公開日時</label>
       <%= @other_content.release_date.to_date %></br>
-      <% if @other_content.liked_by?(current_user) %>
-                  <%= link_to other_content_likes_path(@other_content), method: :delete do %>
-                    <i class="fas fa-heart"></i>
-                    <%= @other_content.likes.count %></br>
-                  <% end %>
-                <% else %>
-                  <%= link_to other_content_likes_path(@other_content), method: :post do %>
-                    <i class="far fa-heart"></i>
-                    <%= @other_content.likes.count %></br>
-                  <% end %>
-                <% end %>
-        <%= link_to other_contents_path do %>
-          <label class="btn btn-primary">戻る</label>
-        <% end %>
+
         <%= link_to edit_other_content_path(@other_content.id) do %>
           <label class="btn btn-success">編集する</label>
         <% end %>
+
     </div>
   </div>
 </div>

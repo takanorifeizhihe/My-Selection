@@ -1,10 +1,15 @@
 class OtherContent < ApplicationRecord
-  
+
   belongs_to :genre
   has_many :posts, dependent: :destroy
-  
+  has_many :likes, dependent: :destroy
+
+  def liked_by?(user)
+    likes.exists?(user_id: user.id)
+  end
+
   has_one_attached:image
-  
+
   def get_image(width, height)
     unless image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')

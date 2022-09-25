@@ -26,4 +26,9 @@ class User < ApplicationRecord
       # 例えば name を入力必須としているならば， user.name = "ゲスト" なども必要
     end
   end
+  
+  def already_liked?(other_content)
+    self.likes.exists?(other_content_id: other_content.id)
+  end
+  
 end

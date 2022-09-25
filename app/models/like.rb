@@ -1,5 +1,6 @@
 class Like < ApplicationRecord
   
   belongs_to :user
-  belongs_to :post
+  belongs_to :other_content
+  belongs_to :movie
 end

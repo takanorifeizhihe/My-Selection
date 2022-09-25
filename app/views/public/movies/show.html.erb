@@ -1,12 +1,36 @@
-<h1>Movies#show</h1>
-<div class="d-flex flex-wrap">
-        <%if @detail['table']['title'].present?%>
+<div class="container">
+  <div class="row m-3">
+    <h3>
+      <span class="bg-secondary px-2">コンテンツ詳細(映画)</span>
+    </h3>
+  </div>
+  <div class="row m-3">
+    <div class="col-4">
+        <%if @movie['table']['title'].present?%>
          <div class="card">
-            <h3><%= @detail['table']['title'] %></h3>
-            <h3><%= @detail['table']['release_date'] %></h3>
-            <h3><%= image_tag 'https://image.tmdb.org/t/p/w1280' + @detail['table']['poster_path'],class: "card-img" %></h3>
+            <label>タイトル</label>
+            <h3><%= @movie['table']['title'] %></h3>
+            <label>公開日時</label>
+            <h3><%= @movie['table']['release_date'] %></h3>
+            <h3><%= image_tag 'https://image.tmdb.org/t/p/w1280' + @movie['table']['poster_path'],class: "card-img" %></h3>
          </div>
         <%end%>
     </div>
-    <%= render 'post_form', post: @post %>
+    <div class="col-7">
+        <% if @movie.liked_by?(current_user) %>
+          <%= link_to movie_likes_path(@movie), method: :delete do %>
+            <i class="fas fa-heart"></i>
+            <%= @movie.likes.count %></br>
+          <% end %>
+        <% else %>
+          <%= link_to movie_likes_path(@movie), method: :post do %>
+            <i class="far fa-heart"></i>
+            <%= @movie.likes.count %></br>
+          <% end %>
+        <% end %>
+        <%= link_to movies_path do %>
+          <label class="btn btn-primary">戻る</label>
+        <% end %>
+    </div>
+  </div>
 </div>
