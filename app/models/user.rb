@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :likes, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
 
@@ -26,9 +27,9 @@ class User < ApplicationRecord
       # 例えば name を入力必須としているならば， user.name = "ゲスト" なども必要
     end
   end
-  
+
   def already_liked?(other_content)
     self.likes.exists?(other_content_id: other_content.id)
   end
-  
+
 end

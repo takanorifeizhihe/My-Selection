@@ -35,7 +35,7 @@ scope module: :public do
 #movies
   #get 'movies/:id' => "movies#show",as: 'detail'
   resources :movies, :only => [:index,:show] do
-    resource :likes, :only => [:create_movie,:destroy_movie]
+    resource :favorites, only: [:create, :destroy]
   end
 
 #other_contents
