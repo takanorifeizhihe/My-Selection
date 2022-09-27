@@ -4,6 +4,8 @@ class Public::FavoritesController < ApplicationController
     @favorite = current_user.favorites.new(movie_id: @movie.id)
     @favorite.save
     redirect_back(fallback_location: root_path)
+  rescue ActiveRecord::RecordInvalid => e
+    pp e
   end
 
   def destroy

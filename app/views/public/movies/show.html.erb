@@ -12,20 +12,20 @@
             <h3><%= @movie['table']['title'] %></h3>
             <label>公開日時</label>
             <h3><%= @movie['table']['release_date'] %></h3>
-            <h3><%= image_tag 'https://image.tmdb.org/t/p/w1280' + @movie['table']['poster_path'],class: "card-img" %></h3>
+            <h3><%= image_tag 'https://image.tmdb.org/t/p/w342' + @movie['table']['poster_path'],class: "card-img" %></h3>
          </div>
         <%end%>
     </div>
     <div class="col-7">
-        <% if @movie.favorited_by?(current_user) %>
-          <%= link_to movie_favorites_path(@movie), method: :delete do %>
+        <% if @movie_info.favorited_by?(current_user) %>
+          <%= link_to movie_favorites_path(@movie_info), method: :delete do %>
             <i class="fas fa-heart"></i>
-            <%= @movie.favorites.count %></br>
+            <%= @movie_info.favorites.count %></br>
           <% end %>
         <% else %>
-          <%= link_to movie_favorites_path(@movie), method: :post do %>
+          <%= link_to movie_favorites_path(@movie_info), method: :post do %>
             <i class="far fa-heart"></i>
-            <%= @movie.favorits.count %></br>
+            <%= @movie_info.favorites.count %></br>
           <% end %>
         <% end %>
         <%= link_to movies_path do %>
