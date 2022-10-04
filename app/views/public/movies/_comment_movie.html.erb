@@ -1,0 +1,27 @@
+
+  <div class="row m-3">
+    <h3>
+      <span class="bg-secondary px-2">コメント</span>
+    </h3>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div>
+        <p>コメント件数：<%= @movie_info.movie_comments.count %></p>
+        <% @movie_info.movie_comments.each do |movie_comment| %>
+          <p><%= image_tag movie_comment.user.get_image(100,100) %></p>
+          <%= movie_comment.user.nickname %>
+          <%= movie_comment.created_at.strftime('%Y/%m/%d') %><%= movie_comment.comment %>
+          <% if movie_comment.user == current_user %>
+            <%= link_to "削除", movie_movie_comment_path(movie_comment.movie, movie_comment), method: :delete,class:"btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_with model: [@movie, @movie_comment] do |f| %>
+          <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+          <%= f.submit "送信する" ,class:"btn btn-success" %>
+        <% end %>
+      </div>
+    </div>
+  </div>

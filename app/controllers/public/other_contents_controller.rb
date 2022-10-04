@@ -12,6 +12,7 @@ class Public::OtherContentsController < ApplicationController
 
   def show
     @other_content = OtherContent.find(params[:id])
+    @othercontent_comment = OthercontentComment.new
 
   end
 
@@ -30,8 +31,8 @@ class Public::OtherContentsController < ApplicationController
 
   def update
     @other_content = OtherContent.find(params[:id])
-    @OtherContent.update(other_content_params)
-    redirect_to other_content_path(@other_content.id)
+    @other_content.update(other_content_params)
+    redirect_to other_content_path(@other_content)
   end
 
   def destroy

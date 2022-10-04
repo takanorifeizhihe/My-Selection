@@ -12,6 +12,7 @@
             <th scope="col">ジャンル</th>
             <th scope="col">タイトル名</th>
             <th scope="col">公開日時</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +37,9 @@
                     <%= other_content.likes.count %>
                   <% end %>
                 <% end %>
+              </td>
+              <td>
+                <p><%= link_to "#{other_content.othercontent_comments.count} コメント", other_content_path(other_content) %></p>
               </td>
             </tr>
           <% end %>

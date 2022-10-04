@@ -36,11 +36,13 @@ scope module: :public do
   #get 'movies/:id' => "movies#show",as: 'detail'
   resources :movies, :only => [:index,:show] do
     resource :favorites, only: [:create, :destroy]
+    resources :movie_comments, only: [:create,:destroy]
   end
 
 #other_contents
   resources :other_contents, :only => [:index, :edit, :show, :create, :update, :destroy ] do
     resource :likes, :only => [:create,:destroy]
+    resources :othercontent_comments, only: [:create,:destroy]
   end
 
 #post

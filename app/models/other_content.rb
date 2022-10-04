@@ -3,6 +3,7 @@ class OtherContent < ApplicationRecord
   belongs_to :genre
   has_many :posts, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :othercontent_comments, dependent: :destroy
 
   def liked_by?(user)
     likes.exists?(user_id: user.id)

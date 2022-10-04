@@ -1,0 +1,62 @@
+<% movies = JSON.parse((Tmdb::Search.movie(params[:looking_for])).to_json) %>
+            ==========<h2><%= params[:looking_for] %>の検索結果</h2>
+            ==========
+            <% movies.each do |movie| %>
+                <tr>
+                 <td>
+                    <h3><%= link_to movie.title,movie_path(movie) %></h3>
+                 </td>
+                 <td>
+                    <p class="release-date"><%= movie.release_date %></p>
+                 </td>
+                 <td>
+                    <p><%= image_tag 'https://image.tmdb.org/t/p/w342' + movie.poster_path,class: "card-img" %></p>
+                 </td>
+                 <td>
+                  <% if movie.favorited_by?(current_user) %>
+                   <%= link_to movie_favorites_path(@movie_info), method: :delete do %>
+                     <i class="fas fa-heart"></i>
+                     <%= @movie_info.favorites.count %></br>
+                   <% end %>
+                  <% else %>
+                   <%= link_to movie_favorites_path(@movie_info), method: :post do %>
+                     <i class="far fa-heart"></i>
+                     <%= @movie_info.favorites.count %></br>
+                   <% end %>
+                  <% end %>
+                 </td>
+                <% i += 1%>
+                </tr>
+            <%end%>
+        <%else%>
+        <%# 検索されていない時にトレンドコンテンツを表示する %>
+        <h2>世界の人気映画</h2>
+            <% @movies.each do |movie| %>
+                <tr>
+                 <td>
+                    <h3><%= link_to movie.title, movie_path(movie.id])%></h3>
+                 </td>
+                 <td>
+                    <p class="release-date"><%= movie.release_date %></p>
+                 </td>
+                 <td>
+                  <h6>
+                    <p><%= image_tag 'https://image.tmdb.org/t/p/w342' + movie.poster_path,class: "card-img" %></p>
+                  </h6>
+                 </td>
+                 <td>
+                  <% if movie.favorited_by?(current_user) %>
+                   <%= link_to movie_favorites_path(@movie_info), method: :delete do %>
+                     <i class="fas fa-heart"></i>
+                     <%= @movie_info.favorites.count %></br>
+                   <% end %>
+                  <% else %>
+                   <%= link_to movie_favorites_path(@movie_info), method: :post do %>
+                     <i class="far fa-heart"></i>
+                     <%= @movie_info.favorites.count %></br>
+                   <% end %>
+                  <% end %>
+                 </td>
+                <% i += 1%>
+                </tr>
+            <%end%>

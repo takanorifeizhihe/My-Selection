@@ -27,11 +27,37 @@
                   <% end %>
                 <% end %>
         <%= link_to other_contents_path do %>
-          <label class="btn btn-primary">戻る</label>
+          <label class="btn btn-primary">一覧画面へ戻る</label>
         <% end %>
-        <%= link_to edit_other_content_path(@other_content.id) do %>
+        <%= link_to edit_other_content_path(@other_content) do %>
           <label class="btn btn-success">編集する</label>
         <% end %>
+    </div>
+  </div>
+  <div class="row m-3">
+    <h3>
+      <span class="bg-secondary px-2">コメント</span>
+    </h3>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div>
+        <p>コメント件数：<%= @other_content.othercontent_comments.count %></p>
+        <% @other_content.othercontent_comments.each do |othercontent_comment| %>
+          <p><%= image_tag othercontent_comment.user.get_image(100,100) %></p>
+          <%= othercontent_comment.user.nickname %>
+          <%= othercontent_comment.created_at.strftime('%Y/%m/%d') %><%= othercontent_comment.comment %>
+          <% if othercontent_comment.user == current_user %>
+            <%= link_to "削除", other_content_othercontent_comment_path(othercontent_comment.other_content, othercontent_comment), method: :delete,class:"btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_with model: [@other_content, @othercontent_comment] do |f| %>
+          <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+          <%= f.submit "送信する" ,class:"btn btn-success" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
