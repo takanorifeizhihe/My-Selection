@@ -17,6 +17,7 @@
         <%end%>
     </div>
     <div class="col-7">
+        <h3><%= @movie['table']['overview'] %></h3>
         <% if @movie_info.favorited_by?(current_user) %>
           <%= link_to movie_favorites_path(@movie_info), method: :delete do %>
             <i class="fas fa-heart"></i>
@@ -33,5 +34,5 @@
         <% end %>
     </div>
   </div>
-  
+
 </div>

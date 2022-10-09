@@ -24,22 +24,30 @@ class Public::MoviesController < ApplicationController
   end
 
   def index
-    #if params[:looking_for].present?
-      @movies = []
-      results = JSON.parse((Tmdb::Movie.popular).to_json)
+
+#検索した時のアクション
+
+     if params[:looking_for].present?
+       @results = JSON.parse((Tmdb::Search.movie(params[:looking_for])).to_json)
+     else
+      # TODO: pagenate_array(https://techtechmedia.com/page-for-array-kaminari/)
+        @results = JSON.parse((Tmdb::Movie.popular).to_json)
+     end
+      @movies = Kaminari.paginate_array([], total_count: @results.dig('table', 'results').count).page(params[:page]).per(10)
+
       i = 0
       # TODO: Hash#dig(https://docs.ruby-lang.org/ja/latest/method/Hash/i/dig.html)
-      while i < results.dig('table', 'results').count
+      while i < @results.dig('table', 'results').count
         begin
-          unless Movie.find_by(name: results.dig('table', 'results', i, 'table', 'id')).present?
+          unless Movie.find_by(name: @results.dig('table', 'results', i, 'table', 'id')).present?
             @movies << Movie.create!(
-              name: results.dig('table','results',i,'table','id'),
-              title: results.dig('table','results',i,'table','title'),
-              intro: results.dig('table','results',i,'table','overview'),
-              releasedate: Date.parse(results.dig('table','results',i,'table','release_date'))
+              name: @results.dig('table','results',i,'table','id'),
+              title: @results.dig('table','results',i,'table','title'),
+              intro: @results.dig('table','results',i,'table','overview'),
+              releasedate: Date.parse(@results.dig('table','results',i,'table','release_date'))
             )
           else
-            @movies << Movie.find_by(name: results.dig('table','results',i,'table','id'))
+            @movies << Movie.find_by(name: @results.dig('table','results',i,'table','id'))
           end
           i += 1
 
@@ -47,7 +55,8 @@ class Public::MoviesController < ApplicationController
           pp e
         end
       end
-    #end
+
+
   end
 
 
