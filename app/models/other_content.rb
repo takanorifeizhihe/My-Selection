@@ -9,6 +9,22 @@ class OtherContent < ApplicationRecord
     likes.exists?(user_id: user.id)
   end
 
+  def avg_score
+    unless self.posts.empty?
+      posts.average(:star).round(-1)
+    else
+      0.0
+    end
+  end
+
+ def avg_score_percentage
+   unless self.posts.empty?
+     posts.average(:star).round(-1).to_f*100/5
+   else
+     0.0
+   end
+ end
+
   has_one_attached:image
 
   def get_image(width, height)

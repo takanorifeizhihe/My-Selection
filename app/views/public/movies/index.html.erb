@@ -30,7 +30,16 @@
           <!--星レビュー表示-->
           <td>　　　　</td>
           <td>
-            <% if movie.favorited_by?(current_user) %>
+            <% if movie.new_record? %>
+              <%= form_with(model: movie, url: favorites_path, method: :post, local: true) do |f| %>
+                <%= f.hidden_field :name %>
+                <%= f.hidden_field :title %>
+                <%= f.hidden_field :intro %>
+                <%= f.hidden_field :releasedate %>
+                <%= 0 %>
+                <%= f.submit class: "far fa-heart" %>
+              <% end %>
+            <% elsif movie.favorited_by?(current_user) %>
               <%= link_to movie_favorites_path(movie), method: :delete do %>
                 <i class="fas fa-heart"></i>
                 <%= movie.favorites.count %>
@@ -60,7 +69,18 @@
           <!--星レビュー表示-->
           <td>　　　　</td>
           <td>
-            <% if movie.favorited_by?(current_user) %>
+            <% if movie.new_record? %>
+              <%= form_with(model: movie, url: favorites_path, method: :post, local: true) do |f| %>
+                <%= f.hidden_field :name %>
+                <%= f.hidden_field :title %>
+                <%= f.hidden_field :intro %>
+                <%= f.hidden_field :releasedate %>
+                <%= 0 %>
+                <%= f.button type: :submit, style: 'border-style: none; background: none;' do %>
+                 <i class="far fa-heart"></i>
+                <% end %>
+              <% end %>
+            <% elsif movie.favorited_by?(current_user) %>
               <%= link_to movie_favorites_path(movie), method: :delete do %>
                 <i class="fas fa-heart"></i>
                 <%= movie.favorites.count %>
@@ -73,7 +93,9 @@
             <% end %>
           </td>
           <td>
-            <p><%= link_to "　#{movie.movie_comments.count} 件　　", movie_path(movie) %></p>
+            <% unless movie.new_record? %>
+              <p><%= link_to "　#{movie.movie_comments.count} 件　　", movie_path(movie) %></p>
+            <% end %>
           </td>
         </tr>
       <% end %>

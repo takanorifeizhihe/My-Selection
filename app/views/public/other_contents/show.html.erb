@@ -34,6 +34,95 @@
         <% end %>
     </div>
   </div>
+  <!-- レビュー-->
+  <div class="row m-3">
+    <h3>
+      <span class="bg-secondary px-2">レビューを投稿</span>
+    </h3>
+  </div>
+    <div class="col">
+      <div>
+        <p>レビューコメント件数：<%= @other_content.posts.count %></p>
+        <% @other_content.posts.each do |post| %>
+          <p><%= image_tag post.user.get_image(100,100) %></p>
+          <div id="star-rate-<%= post.id %>"></div>
+          <script>
+          $('#star-rate-<%= post.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: <%= post.star %>,
+          });
+          </script>
+          <%= post.user.nickname %> |
+          <%= post.created_at.strftime('%Y/%m/%d') %> | <%= post.comment %>
+          <% if post.user == current_user %>
+            <%= link_to "削除", other_content_posts_path(post.other_content, post), method: :delete,class:"btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+      <div>
+        <% if current_user.posts.find_by(other_content_id: @other_content.id).present? %>
+          <%= form_with model: @post, url: other_content_posts_path(@other_content), method: :patch do |f| %>
+            <div>
+              <%= f.label :"レビューコメント"%>
+              <%= f.text_area :comment, name: "post[comment]" %>
+            </div>
+            <div class="form-group row" id="star">
+              <%= f.label :star,'評価 ', class:'col-md-3 col-form-label' %>
+              <%= f.hidden_field :star, id: :review_star %>
+              <%= f.hidden_field :other_content_id, :value => @other_content.id %>
+            </div>
+            <!-- 評価javascript -->
+            <script>
+            $('#star').empty();
+            $('#star').raty({
+              size     : 36,
+              starOff:  '<%= asset_path('star-off.png') %>',
+              starOn : '<%= asset_path('star-on.png') %>',
+              starHalf: '<%= asset_path('star-half.png') %>',
+              scoreName: 'post[star]',
+              half: true
+            });
+            </script>
+            <div>
+              <%= f.submit "投稿",class:"btn btn-success" %>
+            </div>
+          <% end %>
+        <% else %>
+          <%= form_with model: @post, url: other_content_posts_path(@other_content), method: :post do |f| %>
+            <div>
+              <%= f.label :"レビューコメント"%>
+              <%= f.text_area :comment, name: "post[comment]" %>
+            </div>
+            <div class="form-group row" id="star">
+              <%= f.label :star,'評価 ', class:'col-md-3 col-form-label' %>
+              <%= f.hidden_field :star, id: :review_star %>
+              <%= f.hidden_field :other_content_id, :value => @other_content.id %>
+            </div>
+            <!-- 評価javascript -->
+            <script>
+            $('#star').empty();
+            $('#star').raty({
+              size     : 36,
+              starOff:  '<%= asset_path('star-off.png') %>',
+              starOn : '<%= asset_path('star-on.png') %>',
+              starHalf: '<%= asset_path('star-half.png') %>',
+
+              scoreName: 'post[star]',
+              half: true
+            });
+            </script>
+            <div>
+              <%= f.submit "投稿",class:"btn btn-success" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+        <!-- コメント -->
   <div class="row m-3">
     <h3>
       <span class="bg-secondary px-2">コメント</span>
@@ -45,8 +134,8 @@
         <p>コメント件数：<%= @other_content.othercontent_comments.count %></p>
         <% @other_content.othercontent_comments.each do |othercontent_comment| %>
           <p><%= image_tag othercontent_comment.user.get_image(100,100) %></p>
-          <%= othercontent_comment.user.nickname %>
-          <%= othercontent_comment.created_at.strftime('%Y/%m/%d') %><%= othercontent_comment.comment %>
+          <%= othercontent_comment.user.nickname %> |
+          <%= othercontent_comment.created_at.strftime('%Y/%m/%d') %> | <%= othercontent_comment.comment %>
           <% if othercontent_comment.user == current_user %>
             <%= link_to "削除", other_content_othercontent_comment_path(othercontent_comment.other_content, othercontent_comment), method: :delete,class:"btn btn-primary" %>
           <% end %>

@@ -6,18 +6,9 @@ class Public::MovieCommentsController < ApplicationController
 
 
   def create
-
-    unless Movie.find_by(name: @movie["table"]["id"]).present?
-      @movie = Movie.new
-      @movie.name = @movie["table"]["id"].to_s
-      @movie.title = @movie["table"]["title"].to_s
-      @movie.save!
-    else
-      @movie = Movie.find_by(name: @movie["table"]["id"])
-    end
-    
-    @movie = current_user.movie_comments.new(movie_comment_params)
-    @comment.movie_id = @movie.name
+    @movie = Movie.find(params[:movie_id])
+    @comment = current_user.movie_comments.new(movie_comment_params)
+    @comment.movie_id = @movie.id
     @comment.save
     redirect_to movie_path(@movie)
   end

@@ -23,14 +23,14 @@
           <ul class="navbar-nav ml-auto">
             <% if admin_signed_in? %>
             <li>
-              <%= link_to movies_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-home"></i>
+              <%= link_to admin_movies_path,class:'nav-link text-dark' do %>
+              <i class="fa-solid fa-film"></i>
               <span>コンテンツ（映画）一覧</span>
               <% end %>
             </li>
             <li>
               <%= link_to admin_other_contents_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-users"></i>
+              <i class="fa-solid fa-icons"></i>
               <span>コンテンツ(映画以外)一覧</span>
               <% end %>
             </li>
@@ -42,7 +42,7 @@
             </li>
             <li>
               <%= link_to admin_genres_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-book-open"></i>
+              <i class="fa-regular fa-map"></i>
               <span>ジャンル一覧</span>
               <% end %>
             </li>
@@ -58,11 +58,22 @@
             <p class='nav-link text-dark'>ようこそ、<%= current_user.nickname %>さん！</p>
             <li>
               <%= link_to users_my_page_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-users"></i>
+              <i class="fas fa-home"></i>
               <span>マイページ</span>
               <% end %>
             </li>
-
+            <li>
+              <%= link_to movies_path,class:'nav-link text-dark' do %>
+              <i class="fa-solid fa-film"></i>
+              <span>コンテンツ（映画）一覧</span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to other_contents_path,class:'nav-link text-dark' do %>
+              <i class="fa-solid fa-icons"></i>
+              <span>コンテンツ(映画以外)一覧</span>
+              <% end %>
+            </li>
             <li>
               <%= link_to destroy_user_session_path, method: :delete,class:'nav-link text-dark' do %>
               <i class="fas fa-sign-out-alt"></i>
@@ -91,10 +102,10 @@
             </li>
             <% end %>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-dark" type="submit">Search</button>
-          </form>
+          <!--<form class="d-flex">-->
+          <!--  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+          <!--  <button class="btn btn-outline-dark" type="submit">Search</button>-->
+          <!--</form>-->
         </div>
       </div>
       </nav>

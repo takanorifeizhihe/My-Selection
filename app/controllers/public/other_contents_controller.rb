@@ -3,7 +3,7 @@ class Public::OtherContentsController < ApplicationController
 
   def index
     @other_content = OtherContent.new
-     @other_contents = OtherContent.all.page(params[:page]).per(10)
+    @other_contents = OtherContent.all.page(params[:page]).per(10)
   end
 
   def edit
@@ -40,6 +40,8 @@ class Public::OtherContentsController < ApplicationController
     @other_content.destroy
     redirect_to  other_contents_path
   end
+
+  private
 
   def other_content_params
     params.require(:other_content).permit(:genre_id, :title, :release_date, :image)

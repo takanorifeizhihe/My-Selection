@@ -33,30 +33,16 @@ class Public::MoviesController < ApplicationController
       # TODO: pagenate_array(https://techtechmedia.com/page-for-array-kaminari/)
         @results = JSON.parse((Tmdb::Movie.popular).to_json)
      end
-      @movies = Kaminari.paginate_array([], total_count: @results.dig('table', 'results').count).page(params[:page]).per(10)
-
-      i = 0
-      # TODO: Hash#dig(https://docs.ruby-lang.org/ja/latest/method/Hash/i/dig.html)
-      while i < @results.dig('table', 'results').count
-        begin
-          unless Movie.find_by(name: @results.dig('table', 'results', i, 'table', 'id')).present?
-            @movies << Movie.create!(
-              name: @results.dig('table','results',i,'table','id'),
-              title: @results.dig('table','results',i,'table','title'),
-              intro: @results.dig('table','results',i,'table','overview'),
-              releasedate: Date.parse(@results.dig('table','results',i,'table','release_date'))
-            )
-          else
-            @movies << Movie.find_by(name: @results.dig('table','results',i,'table','id'))
-          end
-          i += 1
-
-        rescue ActiveRecord::RecordInvalid => e
-          pp e
-        end
+      # puts @results.dig('table', 'results').count
+      @movies = @results.dig('table', 'results').map.with_index(0) do |o, i|
+        Movie.find_or_initialize_by(
+          name: @results.dig('table','results',i,'table','id'),
+          title: @results.dig('table','results',i,'table','title'),
+          intro: @results.dig('table','results',i,'table','overview'),
+          releasedate: Date.parse(@results.dig('table','results',i,'table','release_date'))
+        )
       end
-
-
+      @movies = Kaminari.paginate_array(@movies, total_count: @movies.count).page(params[:page]).per(10)
   end
 
 

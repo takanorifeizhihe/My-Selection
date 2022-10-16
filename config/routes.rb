@@ -35,18 +35,27 @@ scope module: :public do
 #movies
   #get 'movies/:id' => "movies#show",as: 'detail'
   resources :movies, :only => [:index,:show] do
+    #いいね
     resource :favorites, only: [:create, :destroy]
-    resources :movie_comments, only: [:create,:destroy]
+    #レビュー
+    #resource :reviews, :only => [:create, :destroy, :update]
+    #コメント
+    resources :movie_comments, :only => [:create,:destroy]
   end
+  post "favorites", to: "favorites#first_create", as: "favorites"
 
 #other_contents
   resources :other_contents, :only => [:index, :edit, :show, :create, :update, :destroy ] do
+    #いいね
     resource :likes, :only => [:create,:destroy]
+    #レビュー
+    resource :posts, :only => [:create, :destroy, :update]
+    #コメント
     resources :othercontent_comments, only: [:create,:destroy]
   end
 
 #post
- resources :posts, :only => [:index, :update, :show, :create, :destroy, :edit ]
+ resource :posts, :only => [:create, :destroy]
 end
 
 # 管理者用

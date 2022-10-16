@@ -1,49 +1,40 @@
 class Public::PostsController < ApplicationController
 
 
-  def index
-    @post = Post.new
-    @posts = Post.all
-
-  end
-
-  def update
-    @post = Post.find(params[:id])
-    @post.update(post_params)
-    redirect_to post_path(@other_content.id)
-  end
-
-  def show
-    @post = Post.find(params[:id])
-    @post_comment = PostComment.new
-  end
-
   def destroy
+    @other_content = OtherContent.find(params[:other_content_id])
+    @post = current_user.posts.find_by(other_content_id: @other_content.id)
+    @post.destroy
+    redirect_back(fallback_location: root_path)
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.user_id = current_user.id
-    if @post.save
-      redirect_to posts_path, notice: "You have created book successfully."
-    else
-      @posts = Post.all
-      render 'index'
-    end
-    #if @post.save
-     # redirect_to posts_path, notice: "You have created book successfully."
-    #else
-      @posts = Post.all
-     # render 'index'
-    #end
+    @other_content = OtherContent.find(params[:other_content_id])
+    @post = current_user.posts.new(post_params)
+    @post.other_content_id = @other_content.id
+    @post.save
+    redirect_back(fallback_location: root_path)
+
+    # @other_content = OtherContent.find(params[:other_content_id])
+    # @post = current_user.posts.new(other_content_id: @other_content.id)
+    # @post.save!
+    # redirect_back(fallback_location: root_path)
+  # rescue ActiveRecord::RecordInvalid => e
+  #   pp e.record.errors
   end
 
-  def edit
+
+  def update
+    @other_content = OtherContent.find(params[:other_content_id])
+    @post = current_user.posts.find_by(other_content_id: @other_content.id)
+    @post.update(post_params)
+    redirect_back(fallback_location: root_path)
+
   end
+
+  private
 
   def post_params
-    params.require(:post).permit(:user_id, :movie_id, :other_content_id, :star, :comment)
+    params.require(:post).permit(:user_id, :other_content_id, :star, :comment)
   end
-
-
 end

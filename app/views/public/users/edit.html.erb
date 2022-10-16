@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
           <label for="user_birthday">Birthday</label><br>
-          <%= f.text_field :birthday, autofocus: true, autocomplete: "birthday", placeholder:"例 yyyymmdd" %>
+          <%= f.date_field :birthday, name: "user[birthday]" %>
         </div>
         <div class="form-group">
         <%= f.submit 'Update User', class:"btn btn-secondary" %>
