@@ -6,36 +6,33 @@
   </div>
   <div class="row m-3">
     <div class="col-4">
-      <label>タイトル</label>
-      <h3><%= @movie.title %></h3>
-      <label>公開日時</label>
-      <h3><%= @movie.releasedate %></h3>
-      <h3><%= image_tag 'https://image.tmdb.org/t/p/w342' + @movie_info['table']['poster_path'],class: "card-img" %></h3>
-
+      <%if @movie['table']['title'].present?%>
+       <div class="card">
+          <label>タイトル</label>
+          <h3><%= @movie['table']['title'] %></h3>
+          <label>公開日時</label>
+          <h3><%= @movie['table']['release_date'] %></h3>
+          <h3><%= image_tag 'https://image.tmdb.org/t/p/w342' + @movie['table']['poster_path'],class: "card-img" %></h3>
+       </div>
+      <%end%>
     </div>
     <div class="col-7">
-      <label>概要</label>
-      <h3><%= @movie.intro %></h3>
-        <% if @movie.favorited_by?(current_user) %>
-          <%= link_to movie_favorites_path(@movie), method: :delete do %>
+        <h3><%= @movie['table']['overview'] %></h3>
+        <% if @movie_info.favorited_by?(current_user) %>
+          <%= link_to movie_favorites_path(@movie_info), method: :delete do %>
             <i class="fas fa-heart"></i>
-            <%= @movie.favorites.count %></br>
+            <%= @movie_info.favorites.count %></br>
           <% end %>
         <% else %>
-          <%= link_to movie_favorites_path(@movie), method: :post do %>
+          <%= link_to movie_favorites_path(@movie_info), method: :post do %>
             <i class="far fa-heart"></i>
-            <%= @movie.favorites.count %></br>
+            <%= @movie_info.favorites.count %></br>
           <% end %>
         <% end %>
         <%= link_to movies_path do %>
-          <label class="btn btn-primary">一覧画面へ戻る</label>
+          <label class="btn btn-primary">戻る</label>
         <% end %>
     </div>
-  </div>
-  <div class="row m-3">
-    <div class="col">
-      
-    </div>  
   </div>
   <div class="row m-3">
     <h3>
@@ -45,8 +42,8 @@
   <div class="row">
     <div class="col">
       <div>
-        <p>コメント件数：<%= @movie.movie_comments.count %></p>
-        <% @movie.movie_comments.each do |movie_comment| %>
+        <p>コメント件数：<%= @movie_info.movie_comments.count %></p>
+        <% @movie_info.movie_comments.each do |movie_comment| %>
           <p><%= image_tag movie_comment.user.get_image(100,100) %></p>
           <%= movie_comment.user.nickname %> |
           <%= movie_comment.created_at.strftime('%Y/%m/%d') %> | <%= movie_comment.comment %>
@@ -56,11 +53,11 @@
         <% end %>
       </div>
       <div>
-        <%= form_with model: @movie_comment, url: movie_movie_comments_path(@movie.id) do |f| %>
+        <%= form_with model: [@movie, @movie_comment], url: movie_movie_comments_path(params[:id]), method: :post do |f| %>
           <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
           <%= f.submit "送信する" ,class:"btn btn-success" %>
         <% end %>
       </div>
     </div>
-  </div><!--コメント投稿機能-->
+  </div>
 </div>

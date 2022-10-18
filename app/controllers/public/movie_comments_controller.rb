@@ -6,11 +6,12 @@ class Public::MovieCommentsController < ApplicationController
 
 
   def create
+    #@movie = JSON.parse((Tmdb::Movie.detail(params[:id])).to_json)
     @movie = Movie.find(params[:movie_id])
-    @comment = current_user.movie_comments.new(movie_comment_params)
-    @comment.movie_id = @movie.id
-    @comment.save
-    redirect_to movie_path(@movie)
+    @movie_comment = current_user.movie_comments.new(movie_comment_params)
+    @movie_comment.movie_id = @movie.id
+    @movie_comment.save
+    redirect_to movie_path(@movie.name)
   end
 
   def destroy

@@ -20,7 +20,7 @@
     <%if params[:looking_for].present? %>
     <% @results = JSON.parse((Tmdb::Search.movie(params[:looking_for])).to_json) %>
     <tbody>
-      <h2><%= params[:looking_for] %>の検索結果</h2>
+      <h3><%= params[:looking_for] %>の検索結果</h3>
       <% @movies.each do |movie| %>
         <tr>
           <td><% if movie.title %><%= link_to movie.title, movie_path(movie.name)%><% end %></td>
@@ -62,7 +62,9 @@
       <h2>世界のトレンド映画</h2>
       <% @movies.each do |movie| %>
         <tr>
-          <td><% if movie.title %><%= link_to movie.title, movie_path(movie.name)%><% end %></td>
+          <td>
+            <% if movie.title %><%= link_to movie.title, movie_path(movie.name)%><% end %>
+          </td>
           <td><%= movie.releasedate %>　　</td>
           <!-- TODO:truncate(https://nllllll.com/ruby-on-rails/%E3%80%90rails%E3%80%91%E8%AA%AC%E6%98%8E%E6%96%87%E3%81%AA%E3%81%A9%E3%81%AE%E6%96%87%E5%AD%97%E3%81%AE%E8%A1%A8%E7%A4%BA%E6%95%B0%E3%82%92%E7%9C%81%E7%95%A5%E3%81%97%E3%81%A6%E5%88%B6%E9%99%90/)-->
           <td><%= movie.intro.truncate(40) %></td>

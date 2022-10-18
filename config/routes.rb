@@ -40,7 +40,7 @@ scope module: :public do
     #レビュー
     #resource :reviews, :only => [:create, :destroy, :update]
     #コメント
-    resources :movie_comments, :only => [:create,:destroy]
+    resources :movie_comments, only: [:create,:destroy]
   end
   post "favorites", to: "favorites#first_create", as: "favorites"
 

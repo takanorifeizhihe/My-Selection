@@ -12,7 +12,8 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = current_user
-    @posts = Post.all
+    @movies = current_user.favorite.movies
+    @other_contents = current_user.like.other_contents
   end
 
   def unsubscribe

@@ -5,23 +5,38 @@ class Public::MoviesController < ApplicationController
   Tmdb::Api.language("ja") # こちらで映画情報の表示の際の言語設定を日本語にできます
 
   def show
-
-    @movie = JSON.parse((Tmdb::Movie.detail(params[:id])).to_json)
-
-    unless Movie.find_by(name: @movie["table"]["id"]).present?
-      @movie_info = Movie.new
-      @movie_info.name = @movie["table"]["id"].to_s
-      @movie_info.title = @movie["table"]["title"].to_s
-      @movie_info.save!
+  @movie_info = JSON.parse((Tmdb::Movie.detail(params[:id])).to_json)
+    @movie_comment = MovieComment.new
+    unless Movie.find_by(name: @movie_info["table"]["id"]).present?
+      @movie = Movie.new
+      @movie.name = @movie["table"]["id"].to_s
+      @movie.title = @movie["table"]["title"].to_s
+      @movie.releasedate = @movie["table"]['release_date'].to_s
+      @movie.intro = @movie["table"]['overview'].to_s
+      @movie.save!
     else
-      @movie_info = Movie.find_by(name: @movie["table"]["id"])
+      @movie = Movie.find_by(name: @movie_info["table"]["id"])
     end
   rescue ActiveRecord::RecordInvalid => e
     pp e
-
-    @movie_comment = MovieComment.new
-
   end
+  #   @movie = JSON.parse((Tmdb::Movie.detail(params[:id])).to_json)
+
+  #   unless Movie.find_by(name: @movie["table"]["id"]).present?
+  #     @movie_info = Movie.new
+  #     @movie_info.name = @movie["table"]["id"].to_s
+  #     @movie_info.title = @movie["table"]["title"].to_s
+  #     @movie_info.releasedate = @movie["table"]['release_date'].to_s
+  #     @movie_info.intro = @movie["table"]['overview'].to_s
+  #     @movie_info.save!
+  #   else
+  #     @movie_info = Movie.find_by(name: @movie["table"]["id"])
+  #   end
+  # rescue ActiveRecord::RecordInvalid => e
+  #   pp e
+
+  #   @movie_comment = MovieComment.new
+  # end
 
   def index
 
@@ -44,6 +59,5 @@ class Public::MoviesController < ApplicationController
       end
       @movies = Kaminari.paginate_array(@movies, total_count: @movies.count).page(params[:page]).per(10)
   end
-
 
 end
