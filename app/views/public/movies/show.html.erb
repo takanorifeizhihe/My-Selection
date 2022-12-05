@@ -34,8 +34,8 @@
   </div>
   <div class="row m-3">
     <div class="col">
-      
-    </div>  
+
+    </div>
   </div>
   <div class="row m-3">
     <h3>
@@ -63,4 +63,92 @@
       </div>
     </div>
   </div><!--コメント投稿機能-->
+  <div class="row m-3">
+    <h3>
+      <span class="bg-secondary px-2">レビューを投稿</span>
+    </h3>
+  </div>
+    <div class="col">
+      <div>
+        <p>レビューコメント件数：<%= @movie.reviews.count %></p>
+        <% @movie.reviews.each do |review| %>
+          <p><%= image_tag review.user.get_image(100,100) %></p>
+          <div id="star-rate-<%= review.id %>"></div>
+          <script>
+          $('#star-rate-<%= review.id %>').raty({
+            size: 36,
+            starOff:  '<%= asset_path('star-off.png') %>',
+            starOn : '<%= asset_path('star-on.png') %>',
+            starHalf: '<%= asset_path('star-half.png') %>',
+            half: true,
+            readOnly: true,
+            score: <%= review.star %>,
+          });
+          </script>
+          <%= review.user.nickname %> |
+          <%= review.created_at.strftime('%Y/%m/%d') %> | <%= review.comment %>
+          <% if review.user == current_user %>
+            <%= link_to "削除", movie_reviews_path(review.movie, review), method: :delete,class:"btn btn-primary" %>
+          <% end %>
+        <% end %>
+      </div>
+      <div>
+        <% if current_user.reviews.find_by(movie_id: @movie.id).present? %>
+          <%= form_with model: @review, url: movie_reviews_path(@movie.id), method: :patch do |f| %>
+            <div>
+              <%= f.label :"レビューコメント"%>
+              <%= f.text_area :comment, name: "review[comment]" %>
+            </div>
+            <div class="form-group row" id="star">
+              <%= f.label :star,'評価 ', class:'col-md-3 col-form-label' %>
+              <%= f.hidden_field :star, id: :review_star %>
+              <%= f.hidden_field :movie_id, :value => @movie.id %>
+            </div>
+            <!-- 評価javascript -->
+            <script>
+            $('#star').empty();
+            $('#star').raty({
+              size     : 36,
+              starOff:  '<%= asset_path('star-off.png') %>',
+              starOn : '<%= asset_path('star-on.png') %>',
+              starHalf: '<%= asset_path('star-half.png') %>',
+              scoreName: 'review[star]',
+              half: true
+            });
+            </script>
+            <div>
+              <%= f.submit "投稿",class:"btn btn-success" %>
+            </div>
+          <% end %>
+        <% else %>
+          <%= form_with model: @review, url: movie_reviews_path(@movie.id), method: :post do |f| %>
+            <div>
+              <%= f.label :"レビューコメント"%>
+              <%= f.text_area :comment, name: "review[comment]" %>
+            </div>
+            <div class="form-group row" id="star">
+              <%= f.label :star,'評価 ', class:'col-md-3 col-form-label' %>
+              <%= f.hidden_field :star, id: :review_star %>
+              <%= f.hidden_field :movie_id, :value => @movie.id %>
+            </div>
+            <!-- 評価javascript -->
+            <script>
+            $('#star').empty();
+            $('#star').raty({
+              size     : 36,
+              starOff:  '<%= asset_path('star-off.png') %>',
+              starOn : '<%= asset_path('star-on.png') %>',
+              starHalf: '<%= asset_path('star-half.png') %>',
+
+              scoreName: 'review[star]',
+              half: true
+            });
+            </script>
+            <div>
+              <%= f.submit "投稿",class:"btn btn-success" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div><!--レビュー-->
 </div>
+

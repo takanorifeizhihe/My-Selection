@@ -22,35 +22,67 @@
           <% end %>
         <% end %>
     </div>
-    <div class="col-md-8 offset-md-1">
-      <h1>Posts</h1>
+    <div class="col-md-8 offset-md-1"><!--other_content-->
+      <h2>お気に入り(映画以外)</h2>
         <table class="table table-hover table-inverse">
-          <thead>
+          <thead class="thead-dark">
             <tr>
-              <th></th>
-              <th>Title</th>
-              <th>Opinion</th>
+              <th>タイトル</th>
+              <th>公開日時</th>
+              <th>ジャンル</th>
               <th colspan="3"></th>
             </tr>
           </thead>
+          <%if @likes.exists? %>
           <tbody>
-            <% @movies.each do |movie| %>
+            <% @likes.each do |like| %>
             <tr>
-              <td>
-                <%= link_to user_path(post.user.id) do %>
-                  <%= image_tag post.user.get_image(80,80) %>
-                <% end %>
-              </td>
-              <td>
-
-              </td>
-              <td>
-
-              </td>
+              <td><%= like.other_content.title %></td>
+              <td><%= (like.other_content.release_date).to_date %></td>
+              <td><%= like.other_content.genre.name %></td>
             </tr>
             <% end %>
           </tbody>
+          <% elsif %>
+          <tbody>
+            <tr>
+              <td>
+               <div class="text-center">まだお気に入りはありません</div>
+              </td>
+            </tr>
+          </tbody>
+          <% end %>
         </table>
-      </div>
+        <h2>お気に入り(映画)</h2>
+        <table class="table table-hover table-inverse">
+          <thead class="thead-dark">
+            <tr>
+              <th>タイトル</th>
+              <th>公開日時</th>
+              <th>概要</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <%if @favorites.exists? %>
+          <tbody>
+            <% @favorites.each do |favorite| %>
+            <tr>
+              <td><%= favorite.movie.title %></td>
+              <td><%= favorite.movie.releasedate %>　　</td>
+              <td><%= favorite.movie.intro.truncate(40) %></td>
+            </tr>
+            <% end %>
+          </tbody>
+          <% elsif %>
+          <tbody>
+            <tr>
+              <td>
+               <div class="text-center">まだお気に入りはありません</div>
+              </td>
+            </tr>
+          </tbody>
+          <% end %>
+        </table>
     </div>
   </div>
+</div>

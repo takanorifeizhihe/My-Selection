@@ -12,8 +12,9 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = current_user
-    @movies = current_user.favorite.movies
-    @other_contents = current_user.like.other_contents
+    @likes = Like.where(user_id: current_user)
+    @favorites = Favorite.where(user_id: current_user)
+    
   end
 
   def unsubscribe

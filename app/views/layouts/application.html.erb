@@ -23,6 +23,12 @@
           <ul class="navbar-nav ml-auto">
             <% if admin_signed_in? %>
             <li>
+              <%= link_to admin_users_path,class:'nav-link text-dark' do %>
+              <i class="fa-solid fa-users"></i>
+              <span>会員一覧</span>
+              <% end %>
+            </li>
+            <li>
               <%= link_to admin_movies_path,class:'nav-link text-dark' do %>
               <i class="fa-solid fa-film"></i>
               <span>コンテンツ（映画）一覧</span>
@@ -32,12 +38,6 @@
               <%= link_to admin_other_contents_path,class:'nav-link text-dark' do %>
               <i class="fa-solid fa-icons"></i>
               <span>コンテンツ(映画以外)一覧</span>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to admin_posts_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-book-open"></i>
-              <span>投稿一覧</span>
               <% end %>
             </li>
             <li>
@@ -52,33 +52,34 @@
               <span>ログアウト</span>
               <% end %>
             </li>
-
             <% elsif user_signed_in? %>
 
             <p class='nav-link text-dark'>ようこそ、<%= current_user.nickname %>さん！</p>
-            <li>
-              <%= link_to users_my_page_path,class:'nav-link text-dark' do %>
-              <i class="fas fa-home"></i>
-              <span>マイページ</span>
+              <% unless current_user.nickname == "ゲスト"%>
+              <li>
+                <%= link_to users_my_page_path,class:'nav-link text-dark' do %>
+                <i class="fas fa-home"></i>
+                <span>マイページ</span>
+                <% end %>
+              </li>
               <% end %>
-            </li>
-            <li>
-              <%= link_to movies_path,class:'nav-link text-dark' do %>
-              <i class="fa-solid fa-film"></i>
-              <span>コンテンツ（映画）一覧</span>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to other_contents_path,class:'nav-link text-dark' do %>
-              <i class="fa-solid fa-icons"></i>
-              <span>コンテンツ(映画以外)一覧</span>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to destroy_user_session_path, method: :delete,class:'nav-link text-dark' do %>
-              <i class="fas fa-sign-out-alt"></i>
-              <span>ログアウト</span>
-              <% end %>
+              <li>
+                <%= link_to movies_path,class:'nav-link text-dark' do %>
+                <i class="fa-solid fa-film"></i>
+                <span>コンテンツ（映画）一覧</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to other_contents_path,class:'nav-link text-dark' do %>
+                <i class="fa-solid fa-icons"></i>
+                <span>コンテンツ(映画以外)一覧</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to destroy_user_session_path, method: :delete,class:'nav-link text-dark' do %>
+                <i class="fas fa-sign-out-alt"></i>
+                <span>ログアウト</span>
+                <% end %>
 
             <% else %>
             <li>
@@ -87,7 +88,6 @@
               <span>About</span>
               <% end %>
             </li>
-
             <li>
               <%= link_to new_user_registration_path,class:'nav-link text-dark' do %>
               <i class="fas fa-user-plus"></i>
@@ -100,6 +100,12 @@
               <span>ログイン</span>
               <% end %>
             </li>
+            <li>
+              <%= link_to destroy_admin_session_path, method: :delete,class:'nav-link text-dark' do %>
+              <i class="fas fa-sign-out-alt"></i>
+              <span>ログアウト</span>
+              <% end %>
+            </li>
             <% end %>
           </ul>
           <!--<form class="d-flex">-->
@@ -110,22 +116,8 @@
       </div>
       </nav>
     </header>
-    <main>
-
-    <% if flash[:notice] %>
-      <p id="notice">
-        <%= flash[:notice] %>
-      </p>
-    <% end %>
-    <% if flash[:alert] %>
-      <p id="notice">
-        <%= flash[:alert] %>
-      </p>
-    <% end %>
-
-    </main>
-
-
+    <footer>
+    </footer>
     <%= render 'layouts/flash' %>
     <%= yield %>
     <footer>

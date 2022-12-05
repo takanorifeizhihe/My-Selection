@@ -40,18 +40,6 @@
                     score: <%= "#{other_content.posts.average(:star).to_f.round(1)}" %>,
                   });
                 </script>
-               <!--  <script>-->
-               <!--  console.log(other_content);-->
-               <!-- $('#star<%= other_content.id %>').raty({-->
-               <!--    size      : 36,-->
-               <!--    starOff   : '<%= asset_path('star-off.png') %>',-->
-               <!--    starOn    : '<%= asset_path('star-on.png') %>',-->
-               <!--    starHalf: '<%= asset_path('star-half.png') %>',-->
-               <!--    half      : true,-->
-               <!--    readOnly: true,-->
-               <!--    score: "#{other_content.posts.average(:star).to_f.round(1)}",-->
-               <!--  });-->
-               <!--</script>-->
               </td>
               <td>
                 <% if other_content.liked_by?(current_user) %>
